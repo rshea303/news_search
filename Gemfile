@@ -12,6 +12,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'sprockets-rails'
 gem 'hurley'
 gem 'figaro'
+gem 'faraday'
+gem 'excon'
+gem 'httparty'
 
 group :development, :test do
   gem 'pry'

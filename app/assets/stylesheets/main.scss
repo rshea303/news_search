@@ -1,9 +1,19 @@
-.main-header {
+#main-header {
   text-align: center;
   font-size: 45px;
+  padding: 15px;
 }
 
 .form-control {
   margin: 20px;
 }
 
+.article {
+  border: 1px solid;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+}

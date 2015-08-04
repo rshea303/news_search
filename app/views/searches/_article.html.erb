@@ -1,0 +1,42 @@
+<% @articles.each do |article| %>
+
+  <div class="article">
+    <h5>Title:</h5>
+    <p>
+      <%= article.title %>
+    </p>
+
+    <h5>Excerpt:</h5>
+    <p>
+      <%= article.text %>
+    </p>
+
+    <h5>Keywords:</h5>
+    <% if article.keywords.nil? || article.keywords.empty? %>
+      <p>
+        No keywords listed
+      </p>
+    <% else %>
+      <%= article.keywords.map(&:name).join(', ') %>
+    <% end %>
+
+    <h5>Entities:</h5>
+    <% if article.entities.nil? || article.entities.empty? %>
+      <p>
+        No entities listed
+      </p>
+    <% else %>
+    <ul>
+      <% article.entities.each do |entity| %>
+        <p>
+          <li>Title: <%= entity.title %></li>
+          <li>Type: <%= entity.ent_type %></li>
+          <li>Sentiment Score: <%= entity.sent_score %></li>
+          <li>Sentiment Type: <%= entity.sent_type %></li>
+        </p>
+      <% end %>
+    <% end %>
+    </ul>
+  </div>
+
+<% end %>
