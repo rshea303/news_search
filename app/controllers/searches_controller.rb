@@ -3,36 +3,20 @@ class SearchesController < ApplicationController
   end
 
   def create
+
     reset_all
 
-    if params[:search]
+    if params[:format]
+      topic = params[:format]
+      entity = "anywhere"
+    elsif params[:search]
       topic = params[:search][:topic]
       entity = params[:search][:entity].split.last.downcase
-      result = AlchemyService.new.query(topic, entity)
-
-      if result["result"]["docs"] 
-        result["result"]["docs"].each do |info|
-
-          article = Article.create(
-            title: info["source"]["enriched"]["url"]["title"], 
-            text: info["source"]["enriched"]["url"]["text"]
-          )
-
-          unless info["source"]["enriched"]["url"]["enrichedTitle"]["keywords"].first["knowledgeGraph"]["typeHierarchy"].nil?
-            create_keywords(info["source"]["enriched"]["url"]["enrichedTitle"]["keywords"].first["knowledgeGraph"]["typeHierarchy"][1..-1].split('/'), article)
-          end
-
-          unless info["source"]["enriched"]["url"]["enrichedTitle"]["entities"].nil?
-            create_entities(info["source"]["enriched"]["url"]["enrichedTitle"]["entities"], article)
-          end
-
-        end
-      end
-
-      redirect_to searches_path
     else
       redirect_to searches_path
     end
+    result = AlchemyService.new.query(topic, entity)
+    generate_search(result)
   end
 
   def index
@@ -42,6 +26,27 @@ class SearchesController < ApplicationController
   end
 
   private
+
+  def generate_search(result)
+    if result["result"]["docs"] 
+      result["result"]["docs"].each do |info|
+
+        article = Article.create(
+          title: info["source"]["enriched"]["url"]["title"], 
+          text: info["source"]["enriched"]["url"]["text"]
+        )
+
+        unless info["source"]["enriched"]["url"]["enrichedTitle"]["keywords"].first["knowledgeGraph"]["typeHierarchy"].nil?
+          create_keywords(info["source"]["enriched"]["url"]["enrichedTitle"]["keywords"].first["knowledgeGraph"]["typeHierarchy"][1..-1].split('/'), article)
+        end
+
+        unless info["source"]["enriched"]["url"]["enrichedTitle"]["entities"].nil?
+          create_entities(info["source"]["enriched"]["url"]["enrichedTitle"]["entities"], article)
+        end
+      end
+    end
+    redirect_to searches_path
+  end
 
   def reset_all
     Entity.delete_all

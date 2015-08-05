@@ -29,7 +29,7 @@
     <ul>
       <% article.entities.each do |entity| %>
         <p>
-          <li>Title: <%= entity.title %></li>
+          <li>Title: <%= link_to entity.title, searches_path(format: entity.title), method: :post %></li>
           <li>Type: <%= entity.ent_type %></li>
           <li>Sentiment Score: <%= entity.sent_score %></li>
           <li>Sentiment Type: <%= entity.sent_type %></li>
