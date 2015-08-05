@@ -2,9 +2,6 @@ require 'uri'
 
 class AlchemyService
   
-# https://access.alchemyapi.com/calls/data/GetNews?apikey=YOUR_API_KEY_HERE&return=enriched.url.title&start=1434240000&end=1434927600&q.enriched.url.cleanedTitle=apple&count=25&outputMode=json
-# https://access.alchemyapi.com/calls/data/GetNews?apikey=YOUR_API_KEY_HERE&return=enriched.url.title&start=1434240000&end=1434927600&q.enriched.url.enrichedTitle.entities.entity=|text=apple,type=person|&count=25&outputMode=json
-
   def query(topic, entity)
     Faraday.default_adapter = :excon
 
