@@ -17,3 +17,18 @@
 ul {
   list-style-type: none;
 }
+
+/* flash */
+.messages {
+  text-align: center;
+  padding: 10px;  
+}
+
+.flash-notice {
+    background-color: green;
+}
+
+.flash-alert {
+    background-color: red;
+}
+
