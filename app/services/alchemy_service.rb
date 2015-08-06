@@ -5,7 +5,7 @@ class AlchemyService
   def query(topic, entity)
     Faraday.default_adapter = :excon
 
-    uri = Faraday.escape("https://access.alchemyapi.com/calls/data/GetNews?apikey=#{ENV['API_KEY']}")
+    uri = URI.escape("https://access.alchemyapi.com/calls/data/GetNews?apikey=#{ENV['API_KEY']}")
 
     search_params = %w(enriched.url.title
                        enriched.url.url
