@@ -1,6 +1,11 @@
 require 'uri'
 
 class AlchemyService
+  attr_reader :count
+
+  def initialize
+    @count = 0
+  end
   
   def query(topic, entity)
     Faraday.default_adapter = :excon
@@ -30,6 +35,12 @@ class AlchemyService
       faraday.params["outputMode"]                  = "json"
     end
 
-    JSON.parse(response.body)
+    if !JSON.parse(response.body)["result"] && count < 3 
+      @count += 1
+      query(topic, entity)
+    else
+      JSON.parse(response.body)
+    end
   end
+ 
 end
