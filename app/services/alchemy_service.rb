@@ -26,7 +26,7 @@ class AlchemyService
         faraday.params["q.enriched.url.cleanedTitle"] = "#{topic}"
       end
 
-      faraday.params["count"]                       = "3"
+      faraday.params["count"]                       = "15"
       faraday.params["outputMode"]                  = "json"
     end
 
